@@ -1,12 +1,12 @@
 from langchain_ollama import ChatOllama
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 '''
  this is setting up a model object , it has m,any parameters which include, model (which LLM model we are using)
   temperature (range 0 -1 , 0 means robotic/deterministic, 1 means creative/random), max_token(token represents eachnword)
   and timeout , how many seconds to wait before giving up 
 '''
-model = ChatOllama(model = "phi3:mini", temperature = 0)
+model = ChatOllama(model = "llama3:8b", temperature = 0)
 # response = model.invoke([HumanMessage(content = "What is the capital of France")])
 
 # print(response.content)
@@ -33,4 +33,12 @@ response = model.invoke(
 # print(response.id)
 # # print(response.response_metadata)
 # print(response.tool_calls)
-print(response.usage_metadata)
+# print(response.usage_metadata)
+
+response = model.invoke([
+    SystemMessage(content = "You are a god , answer the questions like a bully"),
+    HumanMessage(content = "Hey is it okay if i ask you some questions?")
+
+])
+
+print(response.content)
